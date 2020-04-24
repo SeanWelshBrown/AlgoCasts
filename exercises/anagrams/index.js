@@ -8,37 +8,43 @@
 //   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
 //   anagrams('Hi there', 'Bye there') --> False
 
+
+// comparing formatted and sorted versions of the strings
 function anagrams(stringA, stringB) {
-  const stringAObj = {}
-  const stringBObj = {}
-  const stringAArr = []
-  const stringBArr = []
-
-  const stringANoCase = stringA.toLowerCase().replace(/[^\w]|_/g, "")
-  const stringBNoCase = stringB.toLowerCase().replace(/[^\w]|_/g, "")
-
-  for (let char of stringANoCase) {
-    stringAObj[char] = stringAObj[char] + 1 || 1;
-  }
-  for (let char of stringBNoCase) {
-    stringBObj[char] = stringBObj[char] + 1 || 1;
-  }
-
-  for (let key in stringAObj) {
-    stringAArr.push({char: key, number: stringAObj[key]})
-  }
-  for (let key in stringBObj) {
-    stringBArr.push({char: key, number: stringAObj[key]})
-  }
-
-  const stringAArrSorted = stringAArr.sort((a, b) => (a.char > b.char) ? 1 : -1)
-  const stringBArrSorted = stringBArr.sort((a, b) => (a.char > b.char) ? 1 : -1)
-
-  if (JSON.stringify(stringAArrSorted) === JSON.stringify(stringBArrSorted)) {
-    return true
-  } else {
-    return false
-  }
+  return formatString(stringA) === formatString(stringB)
 }
+  // format string helper function
+  function formatString(str) {
+    return str.toLowerCase().replace(/[^\w]|_/g, "").split("").sort().join("");
+  }
+
+
+// using compared Maps
+function anagrams2(stringA, stringB) {
+  const charMapA = buildCharMap(stringA)
+  const charMapB = buildCharMap(stringB)
+
+  if (Object.keys(charMapA).length !== Object.keys(charMapB).length) {
+    return false;
+  }
+
+  for (let char in charMapA) {
+    if (charMapA[char] !== charMapB[char]) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+  // map helper function
+  function buildCharMap(str) {
+    const charMap = {};
+    const formattedStr = str.replace(/[^\w]|_/g, "").toLowerCase().split("").sort().join("");
+
+    for (let char of formattedStr) {
+      charMap[char] = charMap[char] + 1 || 1;
+    };
+    return charMap;
+  }
 
 module.exports = anagrams;
