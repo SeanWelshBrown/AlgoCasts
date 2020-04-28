@@ -19,8 +19,8 @@
 function matrix(n) {
   let results = [];
   for (i = 0; i < n; i++) {
-    results.push([])
-  };
+    results.push([]);
+  }
 
   let counter = 1;
   let topRow = 0;
@@ -33,35 +33,34 @@ function matrix(n) {
     // top row
     for (i = leftColumn; i <= rightColumn; i++) {
       results[topRow][i] = counter;
-      counter++
+      counter++;
     }
     topRow++;
 
     // right column
     for (i = topRow; i <= bottomRow; i++) {
       results[i][rightColumn] = counter;
-      counter++
+      counter++;
     }
     rightColumn--;
 
     // bottom row
     for (i = rightColumn; i >= leftColumn; i--) {
       results[bottomRow][i] = counter;
-      counter++;
+      counter++
     }
     bottomRow--;
 
     // left column
     for (i = bottomRow; i >= topRow; i--) {
       results[i][leftColumn] = counter;
-      counter++;
+      counter++
     }
     leftColumn++;
 
   }
-
+  
   return results;
 }
-
 
 module.exports = matrix;
