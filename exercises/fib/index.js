@@ -10,8 +10,35 @@
 
 
 
-// iterative
+// memoization of recursive solution
+function memoize(fn) {
+  const cache = {};
+  return function(...args) {
+    if (cache[args]) {
+      return cache[args]
+    }
+
+    const result = fn.apply(this, args);
+    cache[args] = result;
+
+    return result;
+  }
+}
+
 function fib(n) {
+  if (n < 2) {
+    return n;
+  }
+
+  return fib(n - 1) + fib(n - 2)
+}
+
+fib = memoize(fib);
+
+
+
+// iterative
+function fib2(n) {
   const nums = [0, 1];
 
   while (nums.length <= n) {
@@ -23,7 +50,7 @@ function fib(n) {
 
 
 // alternate iterative
-function fib2(n) {
+function fib3(n) {
   const nums = [0, 1];
 
   for (i = 2; i <= n; i++) {
@@ -36,7 +63,7 @@ function fib2(n) {
 
 
 // recursive
-function fib3(n) {
+function fib4(n) {
   if (n < 2) {
     return n;
   }
@@ -46,7 +73,7 @@ function fib3(n) {
 
 
 // alternate recursive
-function fib4(n, nums = [0, 1]) {
+function fib5(n, nums = [0, 1]) {
   if (nums.length > n) {
     return nums[n];
   }
