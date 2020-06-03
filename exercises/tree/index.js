@@ -29,7 +29,29 @@ class Node {
 }
 
 class Tree {
+  constructor() {
+    this.root = null;
+  }
 
+  traverseBF(fn) {
+    const nodeArr = [this.root];
+    
+    while (nodeArr.length) {
+      const workingNode = nodeArr.shift();
+      nodeArr.push(...workingNode.children);
+      fn(workingNode);
+    }
+  }
+
+  traverseDF(fn) {
+    const nodeArr = [this.root];
+
+    while (nodeArr.length) {
+      const workingNode = nodeArr.shift();
+      nodeArr.unshift(...workingNode.children);
+      fn(workingNode);
+    }
+  }
 }
 
 
